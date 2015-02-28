@@ -1,9 +1,9 @@
-% Prueba_Simplex_KleeMinty.m
-% Probamos linprog.m con Klee-Minty
-%
+% Prueba_SIMPLEXFASEII.m
+% Probamos SIMPLEXFASEII.m con Klee-Minty y con Generalp.m
 
+%Klee-Minty
 close all
-nc = 4;
+nc = 100;
 M = zeros(nc, 43);
 tic
 for k = 1:nc
@@ -15,3 +15,6 @@ for k = 1:nc
     iter
 end
 toc
+
+%Generalp
+
