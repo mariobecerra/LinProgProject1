@@ -18,18 +18,18 @@ function [x, fx, ban, iter] = SIMPLEXFASEII (c, A, b)
 %Para que coincidan las dimensiones
 [u,v]=size(b);
 if(u==1)
-    b=b'
+    b=b';
 end
 
 [u,v]=size(c);
 if(u==1)
-    c=c'
+    c=c';
 end
 
 [m,n] = size(A)
 x=zeros(m+n,1);
 %x=b-A.*.
-%A=[A,eye(m,m)];
+A=[A,eye(m,m)];
 
 B=(n+1):(n+m);
 N=1:n;
@@ -40,41 +40,48 @@ ban=2;
 %Falta bandera de conjunto vacío
 %Falta número de iteraciones
 
-while(ban==2)
+while(ban==2 & iter<5000)
     iter=iter+1;
     if (sum(c>0) > 0) 
         k=min(find(c>0))
         
         temp=zeros(m,1)+Inf;
         temp(b./A(:,k)>0)=0;
-        temp=temp+(b./A(:,k));
+        temp=temp+(b./A(:,k))
         l=find(temp==min(temp));
         l=min(l) %En caso de empate escoge el de índice más pequeño
-        if(sum(l > 0))
-            %x([1:l-1 l+1:n]) = b([1:l-1 l+1:n]) - A([1:l-1 l+1:n],k)*b(l)/A(l,k);
-            x(k)=b(l)/A(l,k);
-            fx=fx+c(k)*b(l)/A(l,k); %Actualizar func obj
-            c([1:k-1 k+1:n]) = c([1:k-1 k+1:n]) - c(k)*A(l,[1:k-1 k+1:n])'/A(l,k); %Act cj pa todo j No básica menos k
-            c(k)=-c(k)/A(l,k); %Actualizar ck
-            
-            if(sum(b([1:l-1 l+1:m]))>0)
-                b([1:l-1 l+1:m]) = b([1:l-1 l+1:m]) - A([1:l-1 l+1:m],k)*b(l)/A(l,k); %Actualizar bi pa todo i Básica menos l
-                A([1:l-1 l+1:m], [1:k-1 k+1:n]) = A([1:l-1 l+1:m], [1:k-1 k+1:n]) - (1/A(l,k)) * A([1:l-1 l+1:m],k) * A(l,[1:k-1 k+1:n]); %Actualizar aij pa todo j No básico menos k y todo i Básica menos l
-                A([1:l-1 l+1:m], l) = A([1:l-1 l+1:m], k) / A(l,k); %Actualizar ail para todo i Básica menos l
-                b(k) = b(l)/A(l,k); %Actualizar bk
-                A(k,l) = 1/(A(l,k)); %Actualizar akl
-                B=union(setdiff(B,l), k);
-                N=union(setdiff(N,k), l);
-            else
-                ban=0;
-                disp('El problema no es acotado');
-                break;
-            end %if
-        
-        else     
+        if(sum(l == 0) | sum(temp)==0 | sum(temp==Inf)==m)   
             ban=0;
             disp('El problema no es acotado');
             break;
+        else
+            %x([1:l-1 l+1:n]) = b([1:l-1 l+1:n]) - A([1:l-1 l+1:n],k)*b(l)/A(l,k);
+            x(k)=b(l)/A(l,k);
+            fx=fx+c(k)*b(l)/A(l,k); %Actualizar func obj
+            if(sum(c([1:k-1 k+1:n])>0))
+                c([1:k-1 k+1:n]) = c([1:k-1 k+1:n]) - c(k)*A(l,[1:k-1 k+1:n])'/A(l,k); %Act cj pa todo j No básica menos k
+            end
+            c(k)=-c(k)/A(l,k); %Actualizar ck
+            
+            if(sum(b([1:l-1 l+1:m]))==0)
+                b([1:l-1 l+1:m]) = b([1:l-1 l+1:m]) - A([1:l-1 l+1:m],k)'*b(l)/A(l,k); %Actualizar bi pa todo i Básica menos l
+            else
+                b([1:l-1 l+1:m]) = b([1:l-1 l+1:m]) - A([1:l-1 l+1:m],k)*b(l)/A(l,k);
+            end
+            A([1:l-1 l+1:m], [1:k-1 k+1:n]) = A([1:l-1 l+1:m], [1:k-1 k+1:n]) - (1/A(l,k)) * A([1:l-1 l+1:m],k) * A(l,[1:k-1 k+1:n]); %Actualizar aij pa todo j No básico menos k y todo i Básica menos l
+            A([1:l-1 l+1:m], l) = A([1:l-1 l+1:m], k) / A(l,k); %Actualizar ail para todo i Básica menos l
+            b(l) = b(l)/A(l,k); %Actualizar bl
+            A(l,[1:k-1 k+1:n]) = A(l,[1:k-1 k+1:n]) / A(l,k); %Actualizar akj
+            A(l,l) = 1/(A(l,k)); %Actualizar akl
+            B=union(setdiff(B,l), k);
+            N=union(setdiff(N,k), l);
+            b
+            A
+            % else
+            %     ban=0;
+            %     disp('El problema no es acotado');
+            %     break;
+            % end %if    
 
         end %if
     else
