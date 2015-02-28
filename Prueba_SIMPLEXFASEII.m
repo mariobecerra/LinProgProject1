@@ -20,7 +20,7 @@ toc
 
 %Generalp
 tic
-glp=3;
+glp=1;
 disp('Empezando LinProg')
 for r = 1:glp
  % generamos el problema

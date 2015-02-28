@@ -15,8 +15,11 @@ function [c, A, b] = Generalp
 %
 %rng(124365);
 
- m = round( 10*exp( log(100)*rand()) );  % n�mero de restricciones
- n = round( 10*exp( log(100)*rand()) );  % n�mero de variables
+ %m = round( 10*exp( log(100)*rand()) );  % n�mero de restricciones
+ %n = round( 10*exp( log(100)*rand()) );  % n�mero de variables
+ 
+  m = round( 2/10*exp( log(100)*rand()) );  % n�mero de restricciones
+  n = round( 2/10*exp( log(100)*rand()) );  % n�mero de variables
 % 
 sigma = 10;
 A = round(sigma*randn(m,n));             % matriz de restricciones
