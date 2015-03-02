@@ -50,7 +50,7 @@ while(ban==2 & iter<5000)
             c(l)=-c(k)/A(l,k); %Actualizar ck
             b(setdiff(B,l)) = b(setdiff(B,l)) - A(setdiff(B,l),k)*b(l)/A(l,k); %Actualizar bi pa todo i Básica menos l
             A(setdiff(B, l), setdiff(N,k)) = A(setdiff(B, l), setdiff(N, k)) - (1/A(l,k)) * A(setdiff(B, l),k) * A(l,setdiff(N,k)); %Actualizar aij pa todo j No básico menos k y todo i Básica menos l
-            A(setdiff(B, l), l) = A(setdiff(B, l), k) / A(l,k); %Actualizar ail para todo i Básica menos l
+            A(setdiff(B, l), l) = - A(setdiff(B, l), k) / A(l,k); %Actualizar ail para todo i Básica menos l
             b(k) = b(l)/A(l,k); %Actualizar bl
             A(k,setdiff(N,k)) = A(l,setdiff(N,k)) / A(l,k); %Actualizar akj
             A(k,l) = 1/(A(l,k)); %Actualizar akl
