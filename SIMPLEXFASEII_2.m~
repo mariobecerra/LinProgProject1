@@ -20,33 +20,41 @@ A=[A,eye(m,m)];
 B=(n+1):(n+m);
 N=1:n;
 fx=0;
+b=[zeros(1,n) b']';
+x(B)=b(B)+A(:,N)*x(N);
 iter=0;
 ban=2;
 while(ban==2 & iter<5000)
     iter=iter+1;
     if (sum(c>0) > 0) 
-        k=min(find(c>0));
+        k=min(find(c(N)>0));
         temp=zeros(m,1)+Inf;
         temp(b./A(:,k)>0)=0;
         temp=temp+(b./A(:,k));
-        l=min(find(temp==min(temp))); %En caso de empate escoge el de índice más pequeño
+        l=min(find(temp==min(temp)))+n; %En caso de empate escoge el de índice más pequeño
         if(sum(l == 0) | sum(temp)==0 | sum(temp==Inf)==m)   
             ban=0;
             disp('El problema no es acotado');
             break;
         else
-            x(l)=b(l);
-            x(l)=b(k)/A(l,k);
-            fx=fx+c(k)*b(l)/A(l,k); %Actualizar func obj
-            if(sum(c([1:k-1 k+1:n])>0))
-                c([1:k-1 k+1:n]) = c([1:k-1 k+1:n]) - c(k)*A(l,[1:k-1 k+1:n])'/A(l,k); %Act cj pa todo j No básica menos k
+            %x(l)=b(l)-A(l,N)*x(N);
+            x(k)=(1/A(l-n,k))*(b(l) - x(l) - A(l-n,setdiff(N,k))*x(setdiff(N,k)));
+            fx=fx+c(k)*b(l)/A(l-n,k); %Actualizar func obj
+            if(sum(c(setdiff(N,k))>0))
+                c(setdiff(N,k)) = c(setdiff(N,k)) - c(k)*A(l-n,setdiff(N,k))'/A(l-n,k); %Act cj pa todo j No básica menos k
             end
-            c(k)=-c(k)/A(l,k); %Actualizar ck
-            if(sum(b([1:l-1 l+1:m]))==0)
-                b([1:l-1 l+1:m]) = b([1:l-1 l+1:m]) - A([1:l-1 l+1:m],k)'*b(l)/A(l,k); %Actualizar bi pa todo i Básica menos l
+            c(k)=-c(k)/A(l-n,k); %Actualizar ck
+            if(sum(b(setdiff(B,l)))==0)
+                b(setdiff(B,l)) = b(setdiff(B,l)) - A(setdiff(B,l)-n,k)'*b(l)/A(l-n,k); %Actualizar bi pa todo i Básica menos l
             else
-                b([1:l-1 l+1:m]) = b([1:l-1 l+1:m]) - A([1:l-1 l+1:m],k)*b(l)/A(l,k);
+                b(setdiff(B,l)) = b(setdiff(B,l)) - A(setdiff(B,l)-n,k)*b(l+n)/A(l,k);
             end
+            sa = b(setdiff(B, l+n)) - A(setdiff(B, l+n)-n,k)*b(l+n)/A(l,k);
+            sb = - A(setdiff(B, l+n)-n,k)*x(k)/A(l,k);
+            sc = A(setdiff(B,l+n)-n,setdiff(N,k))*x(setdiff(N,k));
+            sd = - (A(setdiff(B, l+n)-n, setdiff(N,k)) - A(l, setdiff(N,k)) - A(setdiff(B, l+n)-n,k))*x(setdiff(N,k));
+            x(setdiff(B, l+n)-n) = sa+sb+sc+sd;
+            %x(setdiff(B, l))=b(setdiff(B, l)) - A(setdiff(B, l),k)*b(l)/A(l,k) - A(setdiff(B, l),k)*x(k)/A(l,k)- (A(setdiff(B, l), setdiff(N,k)) - A(l, setdiff(N,k)) - A(setdiff(B, l),k))*x(setdiff(N,k));
             A([1:l-1 l+1:m], [1:k-1 k+1:n]) = A([1:l-1 l+1:m], [1:k-1 k+1:n]) - (1/A(l,k)) * A([1:l-1 l+1:m],k) * A(l,[1:k-1 k+1:n]); %Actualizar aij pa todo j No básico menos k y todo i Básica menos l
             A([1:l-1 l+1:m], l) = A([1:l-1 l+1:m], k) / A(l,k); %Actualizar ail para todo i Básica menos l
             b(l) = b(l)/A(l,k); %Actualizar bl

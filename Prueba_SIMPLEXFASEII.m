@@ -33,11 +33,11 @@ for r = 1:glp
     options=optimset('Algorithm','interior-point-convex');
     [x_m,fx_m exitflag, output_m ] =linprog(-c,A,b,[],[],lb,ub,[],options);
     %Mi método
-    [x,fx,ban,iter]=SIMPLEXFASEII(c,A,b);
+    [x,fx,ban,iter]=SIMPLEXFASEII_3(c,A,b);
     fx_m=-fx_m;
-    if(ban==1)
+    if(ban==1 | exitflag==1)
         yo(r)=fx-c'*x;
-        mat(r)=fx_m-c'*x_m;
+        %mat(r)=fx_m-c'*x_m;
         x
         x_m
         fx
