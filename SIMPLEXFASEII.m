@@ -32,8 +32,9 @@ fx=0;
 b=[zeros(1,n) b']';
 c=[c' zeros(1,m)]';
 iter=0;
+r=sortrows(combvec(1:m+n, 1:m+n)');
 while(ban==2 & iter<5000)
-    iter=iter+1
+    iter=iter+1;
     if (sum(c>0) > 0) 
         k=find(c>0,1);
         temp=zeros(m+n,1)+Inf;
@@ -57,7 +58,7 @@ while(ban==2 & iter<5000)
             N=union(setdiff(N,k), l);
             c(B)=0;
             b(N)=0;
-            q=setdiff(sortrows(combvec(1:m+n, 1:m+n)'),sortrows(combvec(N,B)'), 'rows');
+            q=setdiff(r,sortrows(combvec(N,B)'), 'rows');
             for i=1:length(q)
                 A(q(i,2),q(i,1))=0;
             end
