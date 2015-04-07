@@ -58,7 +58,7 @@ while(ban==2 & iter<5000)
             N=union(dif(N,k), l);
             c(B)=0;
             b(N)=0;
-            q=setdiff(r,sortrows(combvec(N,B)'), 'rows');
+            q=dif_mat(r,sortrows(combvec(N,B)'));
             for i=1:length(q)
                 A(q(i,2),q(i,1))=0;
             end
