@@ -50,7 +50,6 @@ while(ban==2 & iter<5000)
             c(temp1) = c(temp1) - c(k)*A(l,temp1)'/A(l,k); %Act cj pa todo j No básica menos k
             c(l)=-c(k)/A(l,k); %Actualizar ck
             b(temp2) = b(temp2) - A(temp2,k)*b(l)/A(l,k); %Actualizar bi pa todo i Básica menos l
-            
             A(temp2, temp1) = A(temp2, temp1) - (1/A(l,k)) * A(temp2,k) * A(l,temp1); %Actualizar aij pa todo j No básico menos k y todo i Básica menos l
             A(temp2, l) = - A(temp2, k) / A(l,k); %Actualizar ail para todo i Básica menos l
             b(k) = b(l)/A(l,k); %Actualizar bl
