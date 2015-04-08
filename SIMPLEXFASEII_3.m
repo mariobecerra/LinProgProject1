@@ -60,11 +60,11 @@ while(ban==2 & iter<5000)
             N=sort([temp1, l]);
             c(B)=0;
             b(N)=0;
-            q=dif_mat(r,sortrows(combvec(N,B)'));
+            tic; q=dif_mat(r,sortrows(combvec(N,B)')); t(iter)=toc;
             for i=1:length(q)
                 A(q(i,2),q(i,1))=0;
             end
-            %A(q)=0;
+            %A(q(:,2),q(:,1))=0;
         end %if
     else
         ban=1;
@@ -72,4 +72,6 @@ while(ban==2 & iter<5000)
     end %if
 end %while
 x=b(1:n);
+mean(t)
+sum(t)
 end

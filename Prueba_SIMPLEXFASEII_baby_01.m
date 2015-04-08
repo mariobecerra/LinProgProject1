@@ -10,7 +10,7 @@ fid=fopen('./Out/Resultados Klee-Minty.txt', 'w');
 fprintf(fid, 'q,fx,ban,iter\n');
 for q = 3:km
     [c, A, b] = GeneraKleeMinty(q);
-    [x,fx,ban,iter]=SIMPLEXFASEII(c,A,b);
+    [x,fx,ban,iter]=SIMPLEXFASEII_4(c,A,b);
     fprintf(fid, '%d, %f, %d, %d\n', q,fx,ban,iter);
 end
 fclose(fid);
@@ -21,6 +21,7 @@ nc = 1;
 M = zeros(nc, 4);
 fid=fopen('./Out/Resultados Generalp.txt', 'w');
 fprintf(fid, 'q,m,n,fxMi,banMi,iterMi,fxMAT,banMAT\n');
+disp('Empezando Generalp');
 for k = 1:nc
     nc
     [c, A, b] = Generalp;
@@ -34,7 +35,7 @@ for k = 1:nc
     options=optimset('Algorithm','interior-point-convex');
     [x_m,fx_m exitflag, output_m ] =linprog(-c,A,b,[],[],lb,ub,[],options);
     %Mimétodo
-    [x,fx, ban, iter] = SIMPLEXFASEII_3(c, A, b);
+    [x,fx, ban, iter] = SIMPLEXFASEII_4(c, A, b);
     fprintf(fid, '%d, %d,%d, %f, %d, %d, %f, %d\n', k,m,n,fx,ban,iter, fx_m, exitflag);
     M(k,1) = n;
     M(k,2) = m;

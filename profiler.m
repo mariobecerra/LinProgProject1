@@ -1,4 +1,5 @@
-[c, A, b] = GeneraKleeMinty(20)
+[c, A, b] = GeneraKleeMinty(15)
 SIMPLEXFASEII(c, A, b)
 SIMPLEXFASEII_2(c, A, b)
 SIMPLEXFASEII_3(c, A, b)
+SIMPLEXFASEII_4(c, A, b)
