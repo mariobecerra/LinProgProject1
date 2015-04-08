@@ -1,5 +1,9 @@
 function [ c, A, b ] = GeneraKleeMinty( n )
 %Genera el problema de Klee Minty n-dimensional
+%Mauricio Vueltiflor Gil 000131077
+%Mario Becerra Contreras 000124362
+%José Carlos Castro Montes 000127049    
+%Aaron López Flores 000124432
 c=ones(n,1);
 b=ones(n,1);
 for i=2:n
@@ -21,4 +25,3 @@ end
 c=c1;
 
 end
-

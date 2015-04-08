@@ -1,5 +1,10 @@
 function [c, A, b] = Generalp
-% Genera problemas aleatorios de Programaciï¿½n Lineal del tipo
+
+%Mauricio Vueltiflor Gil 000131077
+%Mario Becerra Contreras 000124362
+%José Carlos Castro Montes 000127049    
+%Aaron López Flores 000124432
+% Genera problemas aleatorios de Programaci?n Lineal del tipo
 %  Max c'*x
 %  A*x =< b
 %  x >= 0
@@ -15,32 +20,23 @@ function [c, A, b] = Generalp
 %
 %rng(124365);
 
- %m = round( 10*exp( log(100)*rand()) );  % nï¿½mero de restricciones
- %n = round( 10*exp( log(100)*rand()) );  % nï¿½mero de variables
- 
-  m = round( 2*exp( log(100)*rand()) );  % nï¿½mero de restricciones
-  n = round( 2*exp( log(100)*rand()) );  % nï¿½mero de variables
-  
-  if(m==0 || m==1)
-      m=2;
-  end
-  
-  if(n==0 || n==1)
-      n=2;
-  end
-  
-  if(m>n)
-      m1=n;
-      n=m;
-      m=m1;
-  end
-% 
+  m = round( 10*exp( log(100)*rand()) );  % n?mero de restricciones
+n = round( 10*exp( log(100)*rand()) );  % n?mero de variables
+
+if(m==0 | m==1)
+m=2;
+end
+
+if(m>n)
+    m1=n;
+    n=m;
+    m=m1;
+end
+
 sigma = 10;
 A = round(sigma*randn(m,n));             % matriz de restricciones
 b = round(sigma*abs(randn(m,1) ) );      % lado derecho
-c = round(sigma*randn(n,1));             % vector de funciï¿½n objetivo
-
+c = round(sigma*randn(n,1));             % vector de funci?n objetivo
 
 
 end
-
