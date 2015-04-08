@@ -17,8 +17,7 @@ function [c, A, b] = Generalp
 %-------------------------------------------------
 % Detalles en: Robert J. Vanderbei, Linear Programming, Foundations
 %  and Extension, Fourth Edition, Springer, New York, 2014, pags:44-50
-%
-%rng(124365);
+
 
 m = round( 10*exp( log(100)*rand()) );  % n?mero de restricciones
 n = round( 10*exp( log(100)*rand()) );  % n?mero de variables
