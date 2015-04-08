@@ -13,9 +13,9 @@ fprintf(fid, 'q,m,n,fx,ban,iter, tiempo\r\n');
 for k = 1:nc
     k
     [c, A, b] = Generalp;
-     n = length(c);
-     m = length(b);
-     tic
+    n = length(c);
+    m = length(b);
+    tic
     [x,fx, ban, iter] = SIMPLEXFASEII(c, A, b);
     t=toc;
     fprintf(fid, '%d, %d,%d, %f, %d, %d, %f\n', k,m,n,fx,ban,iter, t);

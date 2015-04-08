@@ -1,4 +1,4 @@
-function [x, fx, ban, iter] = SIMPLEXFASEII (c, A, b)
+function [x, fx, ban, iter] = SIMPLEXFASEII_viejo (c, A, b)
 % Versión del Simplex en la fase II.
 %Mauricio Vueltiflor Gil 000131077
 %Mario Becerra Contreras 000124362

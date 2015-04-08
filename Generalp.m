@@ -20,7 +20,7 @@ function [c, A, b] = Generalp
 %
 %rng(124365);
 
-  m = round( 10*exp( log(100)*rand()) );  % n?mero de restricciones
+m = round( 10*exp( log(100)*rand()) );  % n?mero de restricciones
 n = round( 10*exp( log(100)*rand()) );  % n?mero de variables
 
 if(m==0 | m==1)

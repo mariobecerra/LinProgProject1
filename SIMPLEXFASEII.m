@@ -1,7 +1,11 @@
-﻿function [x, fx, ban, iter] = SIMPLEXFASEII (c, A, b)
+function [x, fx, ban, iter] = SIMPLEXFASEII (c, A, b)
 % Versión del Simplex en la fase II.
+%Mauricio Vueltiflor Gil 000131077
+%Mario Becerra Contreras 000124362
+%José Carlos Castro Montes 000127049    
+%Aaron López Flores 000124432
 % Salida: x valor  optimo del problema, fx valor de la funcion objetivo en x, ban indica los siguientes casos: 
-% band = −1 conjunto factible vacío, ban == 0 funcion objetivo no acotada superiormente, ban = 1 se encontro solucion óptima.
+% band = ?1 conjunto factible vacío, ban == 0 funcion objetivo no acotada superiormente, ban = 1 se encontro solucion óptima.
 % iter es el número de iteraciones (cambios de diccionarios) que hace el método.
 
 %Para que coincidan las dimensiones
@@ -50,7 +54,6 @@ while(ban==2 & iter<5000)
             c(temp1) = c(temp1) - c(k)*A(l,temp1)'/A(l,k); %Act cj pa todo j No básica menos k
             c(l)=-c(k)/A(l,k); %Actualizar ck
             b(temp2) = b(temp2) - A(temp2,k)*b(l)/A(l,k); %Actualizar bi pa todo i Básica menos l
-            
             A(temp2, temp1) = A(temp2, temp1) - (1/A(l,k)) * A(temp2,k) * A(l,temp1); %Actualizar aij pa todo j No básico menos k y todo i Básica menos l
             A(temp2, l) = - A(temp2, k) / A(l,k); %Actualizar ail para todo i Básica menos l
             b(k) = b(l)/A(l,k); %Actualizar bl
@@ -64,7 +67,6 @@ while(ban==2 & iter<5000)
             for i=1:length(q)
                 A(q(i,2),q(i,1))=0;
             end
-            %A(q(:,2),q(:,1))=0;
         end %if
     else
         ban=1;
@@ -72,6 +74,4 @@ while(ban==2 & iter<5000)
     end %if
 end %while
 x=b(1:n);
-%mean(t)
-%sum(t)
 end
