@@ -56,8 +56,8 @@ while(ban==2 & iter<5000)
             b(k) = b(l)/A(l,k); %Actualizar bl
             A(k,temp1) = A(l,temp1) / A(l,k); %Actualizar akj
             A(k,l) = 1/(A(l,k)); %Actualizar akl
-            B=union(temp2, k);
-            N=union(temp1, l);
+            B=sort([temp2, k]);
+            N=sort([temp1, l]);
             c(B)=0;
             b(N)=0;
             q=dif_mat(r,sortrows(combvec(N,B)'));

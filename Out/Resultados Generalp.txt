@@ -1,1 +1,1 @@
-q,m,n,fx,ban,iter
+q,m,n,fxMi,banMi,iterMi,fxMAT,banMAT
