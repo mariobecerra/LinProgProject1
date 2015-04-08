@@ -1,4 +1,4 @@
-function [x, fx, ban, iter] = SIMPLEXFASEII (c, A, b)
+﻿function [x, fx, ban, iter] = SIMPLEXFASEII (c, A, b)
 % Versión del Simplex en la fase II.
 % Salida: x valor  optimo del problema, fx valor de la funcion objetivo en x, ban indica los siguientes casos: 
 % band = −1 conjunto factible vacío, ban == 0 funcion objetivo no acotada superiormente, ban = 1 se encontro solucion óptima.
@@ -46,29 +46,32 @@ while(ban==2 & iter<5000)
             disp('El problema no es acotado');
         else
             fx=fx+c(k)*b(l)/A(l,k); %Actualizar func obj
-            c(setdiff(N,k)) = c(setdiff(N,k)) - c(k)*A(l,setdiff(N,k))'/A(l,k); %Act cj pa todo j No básica menos k
+            temp1=dif(N,k); temp2=dif(B, l);
+            c(temp1) = c(temp1) - c(k)*A(l,temp1)'/A(l,k); %Act cj pa todo j No básica menos k
             c(l)=-c(k)/A(l,k); %Actualizar ck
-            b(setdiff(B,l)) = b(setdiff(B,l)) - A(setdiff(B,l),k)*b(l)/A(l,k); %Actualizar bi pa todo i Básica menos l
-            A(setdiff(B, l), setdiff(N,k)) = A(setdiff(B, l), setdiff(N, k)) - (1/A(l,k)) * A(setdiff(B, l),k) * A(l,setdiff(N,k)); %Actualizar aij pa todo j No básico menos k y todo i Básica menos l
-            A(setdiff(B, l), l) = - A(setdiff(B, l), k) / A(l,k); %Actualizar ail para todo i Básica menos l
+            b(temp2) = b(temp2) - A(temp2,k)*b(l)/A(l,k); %Actualizar bi pa todo i Básica menos l
+            
+            A(temp2, temp1) = A(temp2, temp1) - (1/A(l,k)) * A(temp2,k) * A(l,temp1); %Actualizar aij pa todo j No básico menos k y todo i Básica menos l
+            A(temp2, l) = - A(temp2, k) / A(l,k); %Actualizar ail para todo i Básica menos l
             b(k) = b(l)/A(l,k); %Actualizar bl
-            A(k,setdiff(N,k)) = A(l,setdiff(N,k)) / A(l,k); %Actualizar akj
+            A(k,temp1) = A(l,temp1) / A(l,k); %Actualizar akj
             A(k,l) = 1/(A(l,k)); %Actualizar akl
-            B=union(setdiff(B,l), k);
-            N=union(setdiff(N,k), l);
+            B=sort([temp2, k]);
+            N=sort([temp1, l]);
             c(B)=0;
             b(N)=0;
             tic; q=setdiff(r,sortrows(combvec(N,B)'), 'rows'); t(iter)=toc;
             for i=1:length(q)
                 A(q(i,2),q(i,1))=0;
             end
+            %A(q(:,2),q(:,1))=0;
         end %if
     else
         ban=1;
-        disp('Solucion óptima encontrada');
+        disp('Solución óptima encontrada');
     end %if
 end %while
 x=b(1:n);
-mean(t)
-sum(t)
+%mean(t)
+%sum(t)
 end
