@@ -64,10 +64,11 @@ while(ban==2 & iter<5000)
             for i=1:length(q)
                 A(q(i,2),q(i,1))=0;
             end
+            %A(q)=0;
         end %if
     else
         ban=1;
-        disp('Solucion óptima encontrada');
+        disp('Solución óptima encontrada');
     end %if
 end %while
 x=b(1:n);

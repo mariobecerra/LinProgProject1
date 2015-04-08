@@ -34,7 +34,7 @@ for k = 1:nc
     options=optimset('Algorithm','interior-point-convex');
     [x_m,fx_m exitflag, output_m ] =linprog(-c,A,b,[],[],lb,ub,[],options);
     %Mimétodo
-    [x,fx, ban, iter] = SIMPLEXFASEII(c, A, b);
+    [x,fx, ban, iter] = SIMPLEXFASEII_3(c, A, b);
     fprintf(fid, '%d, %d,%d, %f, %d, %d, %f, %d\n', k,m,n,fx,ban,iter, fx_m, exitflag);
     M(k,1) = n;
     M(k,2) = m;
